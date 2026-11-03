@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "context7": {
+      "serverUrl": "https://mcp.context7.com/mcp",
+      "timeoutSeconds": 180,
+      "disabled": false
+    }
+  }
+}

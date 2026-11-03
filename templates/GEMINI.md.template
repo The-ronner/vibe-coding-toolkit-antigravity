@@ -1,0 +1,9 @@
+@AGENTS.md
+
+## Google Antigravity
+
+This project uses Google Antigravity. Keep client-neutral agreements in `AGENTS.md`; use `.agents/rules/` for triggered constraints and `.agents/skills/` for focused multi-step procedures.
+
+Use only project-scoped MCP servers declared in `.agents/mcp_config.json`. Keep credentials and OAuth state outside version control. Record installation, discovery, authentication, execution evidence, and limitations in `docs/setup.md`.
+
+Use the project skills relevant to the current task. Do not treat an installed skill as proof that its external service, account, or workflow is available.

@@ -1,0 +1,21 @@
+---
+name: [skill-name]
+description: [What this skill does and when Antigravity should use it.]
+---
+# [Skill title]
+
+## Goal
+
+[State the focused outcome.]
+
+## Procedure
+
+1. [Inspect the relevant project context.]
+2. [Perform the smallest authorized change.]
+3. [Run relevant checks and record evidence.]
+
+## Constraints
+
+- Do not invent commands, integrations, credentials, or successful results.
+- Preserve existing project contracts and user customizations.
+- Keep external actions and destructive changes explicitly authorized.
