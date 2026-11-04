@@ -53,7 +53,7 @@ async function checkDocs() {
   const sources = path.join(root, "templates/project-docs");
   const manifest = JSON.parse(await readFile(path.join(sources, "manifest.json"), "utf8"));
   assert.deepEqual(Object.keys(manifest).sort(), [
-    "AGENTS.md", "CLAUDE.md", "PRODUCT.md", "README.md", "docs/architecture.md",
+    "AGENTS.md", "GEMINI.md", "PRODUCT.md", "README.md", "docs/architecture.md",
     "docs/design.md", "docs/onboarding.md", "docs/quality.md", "docs/setup.md",
   ]);
   const frameworkInstructions = await readFile(path.join(app, "AGENTS.md"), "utf8");
@@ -71,7 +71,7 @@ async function checkDocs() {
   const mergedInstructions = await readFile(path.join(app, "AGENTS.md"), "utf8");
   assert(mergedInstructions.startsWith(frameworkInstructions), "Toolkit must preserve the scaffold AGENTS.md verbatim");
   assert(mergedInstructions.includes(await readFile(path.join(sources, manifest["AGENTS.md"]), "utf8")), "Toolkit instructions must also be present");
-  assert.equal((await readFile(path.join(app, "CLAUDE.md"), "utf8")).trim(), "@AGENTS.md");
+  assert((await readFile(path.join(app, "GEMINI.md"), "utf8")).startsWith("@AGENTS.md"), "GEMINI.md must import the shared AGENTS.md");
   // Document templates contain destination-relative links, not toolkit-relative links.
   for (const destination of Object.keys(manifest)) {
     const text = await readFile(path.join(app, destination), "utf8");
