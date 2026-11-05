@@ -1,0 +1,2 @@
+# Keep line endings stable across platforms (Windows CI checks frontmatter and templates).
+* text=auto eol=lf

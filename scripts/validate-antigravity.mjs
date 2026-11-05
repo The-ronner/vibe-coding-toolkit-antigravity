@@ -5,7 +5,9 @@ import { fileURLToPath } from "node:url";
 
 const root = fileURLToPath(new URL("../", import.meta.url));
 const agents = path.join(root, ".agents");
-const text = async (file) => readFile(path.join(root, file), "utf8");
+// Windows checkouts may convert LF to CRLF; normalize so frontmatter checks behave the same everywhere.
+const lf = (value) => value.replace(/\r\n/g, "\n");
+const text = async (file) => lf(await readFile(path.join(root, file), "utf8"));
 
 assert((await stat(path.join(root, "GEMINI.md"))).isFile(), "GEMINI.md is required");
 assert((await text("GEMINI.md")).includes("@AGENTS.md"), "GEMINI.md must bridge AGENTS.md");
@@ -13,7 +15,7 @@ assert((await text("GEMINI.md")).includes("@AGENTS.md"), "GEMINI.md must bridge 
 const rules = path.join(agents, "rules");
 for (const file of await readdir(rules)) {
   assert(file.endsWith(".md"), `${file}: rules directory may contain only Markdown files`);
-  const content = await readFile(path.join(rules, file), "utf8");
+  const content = lf(await readFile(path.join(rules, file), "utf8"));
   assert(content.startsWith("---\n"), `${file}: missing YAML frontmatter`);
   const header = content.slice(4, content.indexOf("\n---", 4));
   const trigger = header.match(/^trigger:\s*(\S+)/m)?.[1];
@@ -26,7 +28,7 @@ const skills = path.join(agents, "skills");
 for (const dir of await readdir(skills, { withFileTypes: true })) {
   if (!dir.isDirectory()) continue;
   const file = path.join(skills, dir.name, "SKILL.md");
-  const content = await readFile(file, "utf8");
+  const content = lf(await readFile(file, "utf8"));
   assert(content.startsWith("---\n"), `${dir.name}: SKILL.md missing frontmatter`);
   const header = content.slice(4, content.indexOf("\n---", 4));
   assert(/^description:\s*.+$/m.test(header), `${dir.name}: SKILL.md needs description`);
